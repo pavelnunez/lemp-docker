@@ -1,12 +1,12 @@
-## LEMP Stack Docker-compose
+## A Dockerized LEMP Stack, uses Binami Nginx, Bitnami PHP-FPM, Percona (a better MySQL distro) and PhpMyAdmin. 
 
 docker images usage:
 - bitnami/nginx
 - bitnami/php-fpm
-- mariadb
+- percona
 - phpmyadmin/phpmyadmin
 
 password root mysql:
-hakase-labs123
+synergies123
 
-This project for my tutorial on howtoforge.com
+This repository is based on the fantastic work of https://github.com/ndlrx/hakase-labs/tree/master/lemp-compose
