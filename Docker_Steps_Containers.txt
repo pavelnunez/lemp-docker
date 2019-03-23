@@ -1,0 +1,20 @@
+  
+   
+   docker run --rm --interactive -v "$PWD/db-data:/app" --tty composer install
+   docker run --name composer-test --interactive -v "$PWD/db-data:/app" composer /bin/sh
+   docker run -it --name composer-test  composer /bin/bash
+   
+   1- Create Composer Container: 
+   docker run -it --name composer-test -v "$PWD/db-data:/app" composer /bin/bash
+   
+     1a- Install Laravel: 
+	 composer global require laravel/installer
+	 
+	 1b- Create symlink for Laravel to make it global
+     ln -s /tmp/vendor/laravel/installer/laravel /usr/bin
+     
+	 1c- Install Laravel Admin
+	 composer require encore/laravel-admin
+
+   
+   

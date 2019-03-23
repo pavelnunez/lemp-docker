@@ -1,40 +1,58 @@
-nginx:
-    image: 'bitnami/nginx'
-    ports:
-        - '80:8080'
-    links:
-        - phpfpm
-    volumes:
-        - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
-        - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
-        - ./nginx/app.conf:/bitnami/nginx/conf/vhosts/app.conf
-        - ./public:/myapps
+version: "3"
+services: 
+    nginx:
+        image: 'bitnami/nginx'
+        ports:
+            - '81:8080'
+        volumes:
+            - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
+            - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
+            - ./nginx/app.conf:/bitnami/nginx/conf/vhosts/app.conf
+            - ./public:/myapps
+        networks:
+            - localnet
 
-phpfpm:
-    image: 'bitnami/php-fpm'
-    ports:
-        - '9000:9000'
-    volumes:
-        - ./public:/myapps
+    compose:
+        image: 'composer'
+        volumes:
+            - ./public:/myapps
+        networks:
+            - localnet
+            
+    phpfpm:
+        image: 'bitnami/php-fpm'
+        ports:
+            - '9000:9000'
+        volumes:
+            - ./public:/myapps
+        networks:
+            - localnet
 
-mysql:
-    image: 'percona'
-    ports:
-        - '3306:3306'
-    volumes:
-        - ./db-data:/var/lib/mysql
-    environment:
-        - MYSQL_ROOT_PASSWORD=synergies123
+    mysql:
+        image: 'percona'
+        ports:
+            - '3306:3306'
+    # Commented as they fail in Windows 10. Managed inside container.         
+    #    volumes: 
+    #        - ./db-data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=synergies123
+        networks:
+            - localnet
 
-phpmyadmin:
-    image: 'phpmyadmin/phpmyadmin'
-    restart: always
-    ports:
-       - '8080:80'
-    links:
-        - mysql:mysql
-    environment:
-        MYSQL_USERNAME: root
-        MYSQL_ROOT_PASSWORD: synergies123
-        PMA_HOST: mysql
+    phpmyadmin:
+        image: 'phpmyadmin/phpmyadmin'
+        restart: always
+        ports:
+           - '8080:80'
+        environment:
+            MYSQL_USERNAME: root
+            MYSQL_ROOT_PASSWORD: synergies123
+            PMA_HOST: mysql
+        networks:
+            - localnet
 
+networks: 
+    localnet: 
+        driver: "bridge"
+        
