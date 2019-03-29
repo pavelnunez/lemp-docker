@@ -1,4 +1,4 @@
-## A Dockerized LEMP Stack, uses Binami Nginx, Bitnami PHP-FPM, Percona (a better MySQL distro) and PhpMyAdmin. 
+## A Dockerized LEMP Stack, uses Bitnami Nginx, Bitnami PHP-FPM, Percona (a better MySQL distro) and PhpMyAdmin. 
 
 docker images usage:
 - bitnami/nginx
